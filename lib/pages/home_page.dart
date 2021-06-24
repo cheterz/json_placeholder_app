@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:json_placeholder_app/pages/pony_list_page.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -10,27 +11,10 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: Text('Home Page')),
-      body: Center(
-          child: AnimatedSwitcher(
-        duration: const Duration(milliseconds: 900),
-        reverseDuration: const Duration(milliseconds: 0),
-        child: Text(
-          "$_counter",
-          key: ValueKey<int>(_counter),
-          textAlign: TextAlign.center,
-          style: Theme.of(context).textTheme.headline3,
-        ),
-      )),
-      floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.animation),
-        onPressed: () {
-          setState(() {
-            _counter++;
-          });
-        },
-      ),
+    return MaterialApp(
+      title: 'Json Placeholder App',
+      theme: ThemeData(primarySwatch: Colors.blue),
+      home: PonyListPage(),
     );
   }
 }
