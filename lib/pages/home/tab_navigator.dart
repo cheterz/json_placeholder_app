@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:json_placeholder_app/pages/albums/albums_list_page.dart';
 import 'package:json_placeholder_app/pages/pony_list_page.dart';
+import 'package:json_placeholder_app/pages/posts/post_list_page.dart';
+import 'package:json_placeholder_app/pages/todo/todo_list_page.dart';
 import '../../models/tab.dart';
 
 class TabNavigator extends StatelessWidget {
@@ -35,11 +38,11 @@ class TabNavigator extends StatelessWidget {
         Widget currentPage;
         if (tabItem == TabItem.POSTS) {
           // пока мы будем использовать PonyListPage
-          currentPage = PonyListPage();
-        } else if (tabItem == TabItem.POSTS) {
-          currentPage = PonyListPage();
+          currentPage = PostListPage();
+        } else if (tabItem == TabItem.ALBUMS) {
+          currentPage = AlbumsListPage();
         } else {
-          currentPage = PonyListPage();
+          currentPage = ToDoListPage();
         }
         // строим Route (страница или экран)
         return MaterialPageRoute(
