@@ -1,33 +1,34 @@
 import 'package:flutter/material.dart';
-import 'package:json_placeholder_app/pages/home/bottom_navigation.dart';
-import 'package:json_placeholder_app/pages/home/tab_navigator.dart';
+import 'package:mvc_pattern/mvc_pattern.dart';
+
 import '../../models/tab.dart';
 
-// Наша главная страница будет содержать состояние
+import '../../controllers/home_controller.dart';
+
+import 'bottom_navigation.dart';
+import 'tab_navigator.dart';
+
 class HomePage extends StatefulWidget {
   @override
   _HomePageState createState() => _HomePageState();
 }
 
-class _HomePageState extends State<HomePage> {
-  // GlobalKey будет хранить уникальный ключ,
-  // по которому мы сможем получить доступ
-  // к виджетам, которые уже находяться в иерархии
-  // NavigatorState - состояние Navigator виджета
-  final _navigatorKeys = {
-    TabItem.POSTS: GlobalKey<NavigatorState>(),
-    TabItem.ALBUMS: GlobalKey<NavigatorState>(),
-    TabItem.TODOS: GlobalKey<NavigatorState>(),
-  };
+// наше состояние теперь расширяет специальный класс
+// StateMVC из пакета mvc_pattern
+class _HomePageState extends StateMVC {
+  // ссылка на наш контроллер
+  late HomeController _con;
 
-  // текущий выбранный элемент
-  var _currentTab = TabItem.POSTS;
-
-  // выбор элемента меню
-  void _selectTab(TabItem tabItem) {
-    setState(() => _currentTab = tabItem);
+  // super вызывает конструктор StateMVC и
+  // передает ему наш контроллер
+  _HomePageState() : super(HomeController()) {
+    // получаем ссылку на наш контроллер
+    _con = HomeController.controller;
   }
 
+  // здесь почти ничего не изменилось
+  // только currentTab и selectTab теперь
+  // являются частью нашего контроллера
   @override
   Widget build(BuildContext context) {
     // WillPopScope переопределяет поведения
@@ -41,11 +42,11 @@ class _HomePageState extends State<HomePage> {
       // на предыдущий: c заданий на альбомы, с альбомов на посты,
       // и после этого только выходим из приложения
       onWillPop: () async {
-        if (_currentTab != TabItem.POSTS) {
-          if (_currentTab == TabItem.TODOS) {
-            _selectTab(TabItem.ALBUMS);
+        if (_con.currentTab != TabItem.POSTS) {
+          if (_con.currentTab == TabItem.TODOS) {
+            _con.selectTab(TabItem.ALBUMS);
           } else {
-            _selectTab(TabItem.POSTS);
+            _con.selectTab(TabItem.POSTS);
           }
           return false;
         } else {
@@ -63,8 +64,8 @@ class _HomePageState extends State<HomePage> {
         ]),
         // MyBottomNavigation мы создадим позже
         bottomNavigationBar: MyBottomNavigation(
-          currentTab: _currentTab,
-          onSelectTab: _selectTab,
+          currentTab: _con.currentTab,
+          onSelectTab: _con.selectTab,
         ),
       ),
     );
@@ -76,10 +77,10 @@ class _HomePageState extends State<HomePage> {
       // Offstage работает следующим образом:
       // если это не текущий выбранный элемент
       // в нижнем меню, то мы его скрываем
-      offstage: _currentTab != tabItem,
+      offstage: _con.currentTab != tabItem,
       // TabNavigator мы создадим позже
       child: TabNavigator(
-        navigatorKey: _navigatorKeys[tabItem],
+        navigatorKey: _con.navigatorKeys![tabItem],
         tabItem: tabItem,
       ),
     );
