@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:json_placeholder_app/pages/pony_detail_page.dart';
+import 'package:json_placeholder_app/pages/pony/pony_detail_page.dart';
 
 class Pony {
   final int id;

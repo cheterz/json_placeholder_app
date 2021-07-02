@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:json_placeholder_app/pages/albums/albums_list_page.dart';
-import 'package:json_placeholder_app/pages/pony_list_page.dart';
+import 'package:json_placeholder_app/pages/album/albums_list_page.dart';
+import 'package:json_placeholder_app/pages/pony/pony_list_page.dart';
 import 'package:json_placeholder_app/pages/posts/post_list_page.dart';
 import 'package:json_placeholder_app/pages/todo/todo_list_page.dart';
 import '../../models/tab.dart';
