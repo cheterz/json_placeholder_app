@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:json_placeholder_app/controllers/post_controller.dart';
 import 'package:json_placeholder_app/models/post.dart';
+import 'package:json_placeholder_app/pages/posts/post_add_page.dart';
 import 'package:json_placeholder_app/pages/posts/post_list_item.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
 
@@ -29,7 +30,17 @@ class _PostListPageState extends StateMVC {
         appBar: AppBar(
           title: Text("Post List Page"),
         ),
-        body: _buildContent());
+        body: _buildContent(),
+        floatingActionButton: FloatingActionButton(
+          child: Icon(Icons.add),
+          onPressed: () {
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => PostDetailPage(),
+                ));
+          },
+        ));
   }
 
   Widget _buildContent() {

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
+import '../posts/post_add_page.dart';
 
 import '../../models/tab.dart';
 
