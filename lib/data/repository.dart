@@ -14,4 +14,14 @@ class Repository {
       throw Exception("failed request");
     }
   }
+  Future<PostAdd>addPost(Post post) async {
+    final url = Uri.parse("$SERVER/posts");
+    final responce = await http.post(url,body: post.toJson());
+
+    if (responce.statusCode == 201){
+      return PostAddSuccess();
+    } else {
+      return PostAddFailure();
+    }
+  }
 }

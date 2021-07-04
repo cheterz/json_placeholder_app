@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 class Post {
   late final int _id;
   late final int _userId;
@@ -8,6 +10,15 @@ class Post {
   int get id => _id;
   String get title => _title;
   String get body => _body;
+
+  Post(this._userId,this._id,this._title,this._body);
+
+  String toJson(){
+    return json.encode({
+      "title": _title,
+      "content": _body
+    });
+  }
 
   Post.fromJSON(Map<String, dynamic> json)
       : this._userId = json["userId"],
@@ -40,3 +51,8 @@ class PostResultFailure extends PostResult {
 class PostResultLoading extends PostResult {
   PostResultLoading();
 }
+
+abstract class PostAdd{}
+
+class PostAddSuccess extends PostAdd{}
+class PostAddFailure extends PostAdd{}

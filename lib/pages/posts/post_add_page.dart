@@ -1,11 +1,22 @@
 import 'package:flutter/material.dart';
+import 'package:json_placeholder_app/controllers/post_controller.dart';
+import 'package:json_placeholder_app/models/post.dart';
+import 'package:mvc_pattern/mvc_pattern.dart';
 
 class PostDetailPage extends StatefulWidget {
   @override
   _PostDetailPageState createState() => _PostDetailPageState();
+
 }
 
-class _PostDetailPageState extends State<PostDetailPage> {
+class _PostDetailPageState extends StateMVC {
+
+  PostController? _postController;
+
+  _PostDetailPageState() : super(PostController()) {
+    _postController = controller as PostController;
+  }
+
   final TextEditingController titleController = TextEditingController();
   final TextEditingController contentController = TextEditingController();
 
@@ -20,7 +31,16 @@ class _PostDetailPageState extends State<PostDetailPage> {
           IconButton(
             icon: Icon(Icons.check),
             onPressed: () {
-              if (_formKey.currentState!.validate()) {}
+              if (_formKey.currentState!.validate()) {
+                final post = Post(-1,-1,titleController.text,contentController.text);
+                _postController!.addPost(post, (status) {
+                  if (status is PostAddSuccess){
+                    Navigator.pop(context,status);
+                  } else {
+                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Произошла ошибка при добавлении поста")));
+                  }
+                });
+              }
             },
           )
         ],
