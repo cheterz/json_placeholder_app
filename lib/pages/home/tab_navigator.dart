@@ -40,7 +40,7 @@ class TabNavigator extends StatelessWidget {
           // пока мы будем использовать PonyListPage
           currentPage = PostListPage();
         } else if (tabItem == TabItem.ALBUMS) {
-          currentPage = AlbumsListPage();
+          currentPage = AlbumListPage();
         } else {
           currentPage = ToDoListPage();
         }
